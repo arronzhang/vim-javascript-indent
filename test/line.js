@@ -59,8 +59,10 @@ function line(){
 				}, 100);
 			})
 		, email: type.string()
-		.email(),
-		pass: type.string()
+			.trim()
+			.email(), 
+		pass: type.string().
+			trim()
 	});
 }
 

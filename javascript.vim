@@ -116,7 +116,8 @@ function s:GetLineBlockStart(lnum)
 	let msl = -1
 	" let lnum = s:PrevNonBlankNonString(a:lnum)
 	let lnum = a:lnum
-	let dotline = ""
+	let commaline = ""
+	let notcomma = 0
 	while lnum > 0
 		" If we have a continuation line, or we're in a string, use line as MSL.
 		" Otherwise, terminate search as we have found our MSL already.
@@ -129,14 +130,19 @@ function s:GetLineBlockStart(lnum)
 
 		" call confirm("col: " . col . ":" . lnum . ":" . line[col] )
 		if (col > 0 && !s:IsInStringOrComment(lnum, col)) || (col2 > 0 && !s:IsInStringOrComment(lnum2, col2)) || s:IsInString(lnum, strlen(line))
-			let msl = lnum2
-			let lnum = lnum2
 			" call confirm("col: " . col . " col2:" . col2)
 			" , only indent after var..
 			if (col > 0 && (match(line, '^\s*,') + 1) > 0) || (col2 > 0 && (match(line2, ',' . s:line_term) + 1) > 0)
-				let dotline = line2
-				" call confirm("ok: " . dotline . ":" . line2)
+				if !notcomma
+					" call confirm("l: " . lnum)
+					let commaline = line2
+				end
+				" call confirm("ok: " . commaline . ":" . line2)
+			else
+				let notcomma = 1
 			endif
+			let msl = lnum2
+			let lnum = lnum2
 		else
 			"Skip block
 			let lnum2 = s:GetBlockStart(lnum)
@@ -146,7 +152,7 @@ function s:GetLineBlockStart(lnum)
 					let msl = lnum2
 				endif
 			else
-				if strlen(dotline) && match(dotline, '^\s*var') == -1
+				if strlen(commaline) && match(commaline, '^\s*var') == -1
 					" call confirm("ok3: ")
 					return -1
 				endif
