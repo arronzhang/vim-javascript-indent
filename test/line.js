@@ -9,14 +9,14 @@
 function line(){
 
 	var str = "test" 
-		+  "werwer";
+		+ "werwer";
 	var ok
-		, name
-		, dd = {
-			bb: 5
-			, dd: 10
+	  , name
+	  , dd = {
+		  bb: 5
+		, dd: 10
 		}
-		, fn = function() {
+	  , fn = function() {
 		};
 
 	if( true )

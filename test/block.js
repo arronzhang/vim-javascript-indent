@@ -14,8 +14,8 @@ function getBuddy( id ) {
 	 * 
 	 */
 	var bb = 4
-		, dd = 23
-		, gg = 10;
+	  , dd = 23
+	  , gg = 10;
 
 	//Inline comment...
 	id(
@@ -28,24 +28,24 @@ function getBuddy( id ) {
 	return [  //Inline comment
 		{ 
 			id: 1
-			, name: "Jack"
-			, age: 20
-			, desc: "[{test"
+		  , name: "Jack"
+		  , age: 20
+		  , desc: "[{test"
 		},
 		{
 			id: 2
-			, name: "Lucy"
-			, age: 19
+		  , name: "Lucy"
+		  , age: 19
 		}
-		, {
-			id: 3
-			, name: "Lili"
-			, age: 19
-			, test: function(done) {
-				function done() {
+	  , {
+		  id: 3
+		, name: "Lili"
+		, age: 19
+		, test: function(done) {
+			function done() {
 
-				};
-			}
+			};
+		  }
 		}
 	];
 

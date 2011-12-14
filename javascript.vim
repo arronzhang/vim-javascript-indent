@@ -197,6 +197,11 @@ function s:GetBlockStart(lnum)
 	endif
 endfunction
 
+function s:LeftComma(lnum)
+	let cur = match(getline(a:lnum), '^\s*,') + 1 > 0
+	let last = match(getline(s:PrevNonBlankNonString(a:lnum - 1)), '^\s*,') + 1 > 0
+	return cur && !last ? 2 : ( last && !cur ? -2 : 0)
+endfunction
 
 " 3. GetJavascriptIndent Function {{{1
 " =========================
@@ -221,7 +226,8 @@ function GetJavascriptIndent()
 	" others we indent to the containing line's MSL's level.  Return -1 if fail.
 	let cnum = s:GetBlockStart(v:lnum)
 	if cnum > 0
-		return indent(cnum)
+		" Right indent comma
+		return indent(cnum) + ((match(getline(cnum), '^\s*,') + 1 > 0) ? 2: 0)
 	endif
 
 	" If we have a /* set indent to first column.
@@ -249,7 +255,8 @@ function GetJavascriptIndent()
 	let cnum = s:GetLineBlockStart(v:lnum)
 	if cnum > 0 && cnum != v:lnum
 		" call confirm("r:" . cnum)
-		return indent(cnum) + &sw
+		" Left indent comma
+		return  indent(cnum) + &sw - ((match(line, '^\s*,') + 1 > 0) ? 2: 0)
 	endif
 
 	" }}}2
@@ -301,8 +308,10 @@ function GetJavascriptIndent()
 	if nnum > 0
 		return indent(nnum)
 	endif
-
-	return ind
+	" Left indent comma
+	let cur = match(getline(v:lnum), '^\s*,') + 1 > 0
+	let last = match(line, '^\s*,') + 1 > 0
+	return ind - (cur && !last ? 2 : ( last && !cur ? -2 : 0))
 
 endfunction
 
