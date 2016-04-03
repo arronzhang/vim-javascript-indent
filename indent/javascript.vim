@@ -152,7 +152,7 @@ function s:GetLineBlockStart(lnum)
 					let msl = lnum2
 				endif
 			else
-				if strlen(commaline) && match(commaline, '^\s*var') == -1
+				if strlen(commaline) && match(commaline, '^\s*\(const\|let\|var\)\s') == -1
 					" call confirm("ok3: ")
 					return -1
 				endif
