@@ -66,7 +66,7 @@ let s:block_end_regex = '^\s*[]})]'
 
 " Check if the character at lnum:col is inside a string, comment, or is ascii.
 function s:IsInStringOrComment(lnum, col)
-	return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_strcom
+	return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_strcom || getline(a:lnum) =~ '^\s*\%(//\).*$'
 endfunction
 
 " Check if the character at lnum:col is inside a string.
