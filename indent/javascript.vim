@@ -52,7 +52,7 @@ let s:line_block_suf_regex = '\%([\\*+/.,:]\|\W[|&?]\|||\|&&\)' . s:line_term
 
 " Regex suffix line block
 
-let s:one_line_scope_regex = '\%(\<\%(if\|else\|while\)\>[^{;]*\|=\%(>\)\=\|\<for\>.*\%(;\|{\)\@<!' . s:line_term . '\)' . s:line_term
+let s:one_line_scope_regex = '\%(\%(\<else\>\|\<\%(if\|for\|while\)\>\s*(\%([^()]*\|[^()]*(\%([^()]*\|[^()]*(\%([^()]*\|[^()]*([^()]*)[^()]*\))[^()]*\))[^()]*\))\)\|=\%(>\)\=\)' . s:line_term
 
 " Regex that defines start blocks.
 let s:block_start_regex = '\%({\|[\|(\)\s*' . s:line_term
